@@ -183,21 +183,6 @@ void main()
 	
 	while(1) {
 		calc_timer_array();
-		//sort_schedule(); //Not needed for new algo
-		//servo_ang[1] = uart_data;
-		/* Test code : Remove 
-		if(test_counter < 0xfff0 ) {
-			servo_ang[0] = 90 ;
-		}
-
-		else {
-		    servo_ang[0]= 0;
-			test_counter = 0;
-		}
-		test_counter++;*/
-		/* End of Test code */
-		//sort_schedule();
-		//calc_timer_array();
 	}
 
 }
@@ -256,17 +241,6 @@ set_signal_out(char last_servo) {
 
 void 
 set_timer() {
-
-	/* If the angles of consecutive servos are nearby
-	   dont go thro complete procedure, set signals immediatly */
-//BUG: this code below makes servo angle on slot 3 to come to 
-// slot 0 :), need to figure out why????
-/*	if(timer_ticks_per_servo[curr_scheduler_slot] > 0xFFF8 ) {
-		// Jump to next scheduler slot, since we can do whats to be
-		//   done in next slot now itself 
-		increment_sched_slot(); 
-		set_signal_out(get_last_servo());
-	}*/
 
 	/* Load values from Precalculated Array */
 	RCAP2H = timer_ticks_per_servo[curr_scheduler_slot] >> 8;

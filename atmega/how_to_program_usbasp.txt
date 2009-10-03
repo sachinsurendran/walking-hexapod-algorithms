@@ -1,0 +1,1 @@
+sudo avrdude -c usbasp -p ATMEGA16  -U flash:w:single_servo_timer.hex

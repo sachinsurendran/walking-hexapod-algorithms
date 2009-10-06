@@ -1,0 +1,25 @@
+CLK = 10Mhz
+
+Once clock cycle in (sec) = 1/10Mhz= 100 nano sec
+
+Prescalar f/8 = 800 nano sec
+
+Hence to count 1msec = 1ms/800ns ticks
+                     = 1250
+
+Count for 500ms = 1250*500 = 625000 
+
+62500/20 = 31250 ( use 20 as a loop in interrupt , because 625000 is greater
+than 16 bits )
+
+
+/* Get Servo to turn on 1.5ms and turn off 18.5ms */
+Timer Count for 1.5 ms  (ON) = 1250 * 1.5  = 1875  = 0x0753
+Timer Count for 1.0 ms  (ON) = 1250 * 1.0  = 1250  = 0x04E2 
+
+Timer count for 18.5 ms (OFF)= 1250 * 18.5 = 23125 = 0x5A55
+
+Timer count for 18ms     (OFF)= 1250 * 18  = 22500
+
+
+General formula for Timer count = 1250 * (1+ angle/180)

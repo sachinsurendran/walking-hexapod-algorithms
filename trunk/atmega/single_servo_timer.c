@@ -9,13 +9,22 @@
 #define STATES 2 //ON and OFF
 #define ON  1
 #define OFF 0
-unsigned int timer_ticks[STATES]={0x0753, 0x5A55};
-//unsigned int timer_ticks[STATES]={0x0A03, 0xfff5};
+unsigned int timer_ticks[STATES]={ 0x5A55, 934};// Absolute 0 = 1000
+//unsigned int timer_ticks[STATES]={ 0x5A55, 1319};//0
+//unsigned int timer_ticks[STATES]={ 0x5A55, 1528};//40
+//unsigned int timer_ticks[STATES]={ 0x5A55, 1666};//60
+//unsigned int timer_ticks[STATES]={ 0x5A55, 1805};//80
+//unsigned int timer_ticks[STATES]={ 0x5A55, 1944};//100
+//unsigned int timer_ticks[STATES]={ 0x5A55, 2083};//120
+//unsigned int timer_ticks[STATES]={ 0x5A55, 2500};//180
+//unsigned int timer_ticks[STATES]={ 0x5A55, 2795};//270
+//unsigned int timer_ticks[STATES]={ 0x5A55, 2795};//Experimental
 unsigned char state = ON;// ON first
 
 
 ISR(TIMER1_COMPA_vect)
 {
+#ifdef DEBUG_LED
     static unsigned char i=0;
     if (i==20){
         if(PORTD) {
@@ -26,11 +35,19 @@ ISR(TIMER1_COMPA_vect)
         i = 0;
     }
     i++;
-    /* Keep turning state ON & OFF */
-    state = !state;
+#endif
 
     OCR1A = timer_ticks[state];
-    TCNT1 = 1;// Avoid any race condition
+    /* Keep turning state ON & OFF */
+    if(state){
+        /* Any bit on PortA can be connected to servo */
+        PORTA = 0xff;
+    }else {
+        PORTA = 0x00;
+    }
+
+    state = !state;
+//    TCNT1 = 1;// Avoid any race condition
 
     return ;
 }

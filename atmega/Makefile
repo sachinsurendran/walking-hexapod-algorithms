@@ -15,5 +15,9 @@ single_servo_timer.o : single_servo_timer.c
 # erase the AVR before it is programmed
 
 clean:
-	rm -f *.o *.map *.out
+	rm -f *.o *.map *.out *.hex
+
+load:
+	avrdude -c usbasp -p ATMEGA16  -U flash:w:single_servo_timer.hex
+
 
